@@ -14,17 +14,16 @@ public class DAO {
     }
 
     // Método para abrir a conexão com o banco de dados
-    public Connection openConnection() {
+    public void openConnection() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver"); // Carrega o driver JDBC
-            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            this.connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             System.out.println("Conexão com o banco de dados estabelecida.");
         } catch (ClassNotFoundException e) {
             System.err.println("Erro ao carregar o driver JDBC: " + e.getMessage());
         } catch (SQLException e) {
             System.err.println("Erro ao abrir a conexão com o banco de dados: " + e.getMessage());
         }
-        return connection;
     }
 
     // Método para fechar a conexão com o banco de dados

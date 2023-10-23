@@ -9,11 +9,11 @@ public class TransacaoRepositoryImpl implements Repository<TransacaoDAO>{
 	private Connection conn;
 
 	@Override
-	public void create(TransacaoDAO transacao) {
+	public void create(TransacaoDAO transacao, Connection connection) {
 		PreparedStatement stmt = null;
 		DAO dao = new DAO();
 		try {
-			conn = dao.openConnection();
+			conn = connection;
 			String sql = "INSERT INTO transacao(ID, TIPO, VALOR, DATA_CRIACAO, DATA_VENCIMENTO, USUARIO_ID) "
 					+ "VALUES (seq_transacao.NEXTVAL, ?, ?, ?, ?, ?)";
 			stmt = conn.prepareStatement(sql);

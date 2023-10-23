@@ -8,12 +8,16 @@ import java.sql.SQLException;
 public class UsuarioRepositoryImpl implements Repository<UsuarioDAO>{
 	private Connection conn;
 
+	public void createTable() {
+		
+	}
 	@Override
-	public void create(UsuarioDAO usuario) {
+	public void create(UsuarioDAO usuario, Connection connection) {
 		PreparedStatement stmt = null;
 		DAO dao = new DAO();
 		try {
-			conn = dao.openConnection();
+			conn = connection;
+			
 			String sql = "INSERT INTO usuario(ID, NOME, EMAIL, SENHA, CARGO, SALARIO, ADMINISTRADOR) "
 					+ "VALUES (seq_usuario.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 			stmt = conn.prepareStatement(sql);
@@ -34,9 +38,7 @@ public class UsuarioRepositoryImpl implements Repository<UsuarioDAO>{
 		} catch(Exception e) {
 			System.out.println("Erro ao inserir registros " + e.getMessage());
 		}
-		
-		
-		
+
 	}
 
 	@Override

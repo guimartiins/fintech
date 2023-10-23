@@ -12,11 +12,11 @@ public class DespesaRepositoryImpl implements Repository<DespesaDAO>{
 	private Connection conn;
 
 	@Override
-	public void create(DespesaDAO despesa) {
+	public void create(DespesaDAO despesa, Connection connection) {
 		PreparedStatement stmt = null;
 		DAO dao = new DAO();
 		try {
-			conn = dao.openConnection();
+			conn = connection;
 			String sql = "INSERT INTO despesa(ID, TIPO, VALOR, DATA_CRIACAO, USUARIO_ID) "
 					+ "VALUES(seq_despesa.NEXTVAL, ?, ?, ?, ?)";
 			stmt = conn.prepareStatement(sql);

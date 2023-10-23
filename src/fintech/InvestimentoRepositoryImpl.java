@@ -8,11 +8,11 @@ public class InvestimentoRepositoryImpl implements Repository<InvestimentoDAO>{
 	private Connection conn;
 
 	@Override
-	public void create(InvestimentoDAO investimento) {
+	public void create(InvestimentoDAO investimento, Connection connection) {
 		PreparedStatement stmt = null;
 		DAO dao = new DAO();
 		try {
-			conn = dao.openConnection();
+			conn = connection;
 			String sql = "INSERT INTO INVESTIMENTO(ID, TIPO, VALOR, DATA_CRIACAO, DATA_VENCIMENTO, USUARIO_ID) "
 					+ "VALUES(seq_investimento.NEXTVAL, ?, ?, ?, ?, ?)";
 			stmt = conn.prepareStatement(sql);
