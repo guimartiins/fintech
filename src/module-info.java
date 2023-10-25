@@ -2,8 +2,9 @@
  * 
  */
 /**
- * 
+ * @author carlo
+ *
  */
-module fintech {
+module TesteDAO {
 	requires java.sql;
 }
