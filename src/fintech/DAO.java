@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DAO {
     private Connection connection;
-    private final String dbUrl = "jdbc:oracle:thin:@localhost:1521:ORCL"; // Substitua pela URL do seu banco de dados Oracle
-    private final String dbUser = "system";
-    private final String dbPassword = "root";
-
+    private final String dbUrl = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL"; // Substitua pela URL do seu banco de dados Oracle
+    private final String dbUser = "RM552402";
+    private final String dbPassword = "010503";
+	
     public DAO() {
     }
 
@@ -17,7 +17,7 @@ public class DAO {
     public void openConnection() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver"); // Carrega o driver JDBC
-            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            this.connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             System.out.println("Conexão com o banco de dados estabelecida.");
         } catch (ClassNotFoundException e) {
             System.err.println("Erro ao carregar o driver JDBC: " + e.getMessage());
