@@ -4,19 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAO {
+public class DBManager {
     private Connection connection;
     private final String dbUrl = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL"; // Substitua pela URL do seu banco de dados Oracle
-    private final String dbUser = "RM552402";
-    private final String dbPassword = "010503";
+    private final String dbUser = "RM97615";
+    private final String dbPassword = "280900";
 	
-    public DAO() {
+    public DBManager() {
     }
 
     // Método para abrir a conexão com o banco de dados
     public void openConnection() {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver"); // Carrega o driver JDBC
+            Class.forName("oracle.jdbc.driver.OracleDriver");
             this.connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             System.out.println("Conexão com o banco de dados estabelecida.");
         } catch (ClassNotFoundException e) {

@@ -1,42 +1,49 @@
 package fintech;
 
+import java.sql.Connection;
 import java.util.Calendar;
+import java.util.List;
+
+import fintech.DAOs.DespesaDAO;
+import fintech.DAOs.InvestimentoDAO;
+import fintech.DAOs.TransacaoDAO;
+import fintech.models.Despesa;
+import fintech.models.Investimento;
+import fintech.models.Transacao;
 
 public class Main {	
     public static void main(String[] args) {
-        DAO dao = new DAO();
+        DBManager dBManager = new DBManager();
         
         // Abrir a conexão
-        dao.openConnection();
+        dBManager.openConnection();
+        Connection connection = dBManager.getConnection(); 
         
-        //inserção de dados 
+        DespesaDAO despesaDAO = new DespesaDAO();
+        TransacaoDAO transacaoDAO = new TransacaoDAO();
+        InvestimentoDAO investimentoDAO = new InvestimentoDAO();
+
+        for(int i = 0; i < 5; i++) {
+            Despesa despesa = new Despesa("Conta", 1200, Calendar.getInstance(), i);
+            despesaDAO.create(despesa, connection);
+
+            Transacao transacao = new Transacao("Emprestimo", 2000, Calendar.getInstance(), Calendar.getInstance(), i);
+            transacaoDAO.create(transacao, connection);
+
+            Investimento investimento = new Investimento("Tesouro Direto", 2000, Calendar.getInstance(), Calendar.getInstance(), i);
+            investimentoDAO.create(investimento, connection);
+        }
+
+        List<Despesa> despesas = despesaDAO.getAll(connection);
+        System.out.println(despesas.toString());
+
+        List<Transacao> transacoes = transacaoDAO.getAll(connection);
+        System.out.println(transacoes.toString());
         
-        //tabela usuários
-        UsuarioDAO user = new UsuarioDAO(0, "vanessa", "vanessa@gmail.com", "senha8585@#", "Desenvolvedor", 2400, 1);
-        UsuarioRepositoryImpl repositoryUsuario = new UsuarioRepositoryImpl();
-        //repositoryUsuario.create(user, dao.getConnection());
-        
-        //tabela despesa
-        DespesaDAO despesa = new DespesaDAO(0, "Conta", 1200, Calendar.getInstance(), 1);
-        DespesaRepositoryImpl repositoryDespesa = new DespesaRepositoryImpl();
-        //repositoryDespesa.create(despesa, dao.getConnection());
-        
-        //tabela transacao
-        Calendar dataVenc = Calendar.getInstance();
-        dataVenc.set(2023, Calendar.OCTOBER, 21);
-        TransacaoDAO transacao = new TransacaoDAO(0, "Renda variavel", 1200,  Calendar.getInstance(), dataVenc, 1);
-        TransacaoRepositoryImpl repositoryTransacao = new TransacaoRepositoryImpl();
-        //repositoryTransacao.create(transacao, dao.getConnection());
-        
-        //tabela investimento
-        InvestimentoDAO investimento = new InvestimentoDAO(0, "Renda variavel", 2533, Calendar.getInstance(), dataVenc, 1);
-        InvestimentoRepositoryImpl repositoryInvestimento = new InvestimentoRepositoryImpl();
-        repositoryInvestimento.create(investimento, dao.getConnection());
-        
+        List<Investimento> investimentos = investimentoDAO.getAll(connection);
+        System.out.println(investimentos.toString());
         // Fechar a conexão
-        dao.closeConnection();
-        
-       
+        dBManager.closeConnection();
     }
 
 }
